@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
-const cors = requier('cors');
+const cors = require('cors');
+const register = require('../auth/restricted-middleware.js');
 
 const authRouter = require('../auth/auth-router.js');
 const usersRouter = require('../users/users-router.js');
@@ -12,7 +13,7 @@ server.use(express.json());
 server.use(cors());
 
 server.use('/api/auth', authRouter);
-server.use('/api/users', usersRouter);
+server.use('/api/users', register, usersRouter);
 
 server.get('/', (req, res) => {
   res.send('working');
